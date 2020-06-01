@@ -33,15 +33,14 @@ nnoremap <C-n> :set number! relativenumber!<CR>
 noremap <F2> :w <CR> :!node % <CR>
 
 " netrw
-let g:netrw_list_hide='.DS_Store,.git,.cache,dist,node_modules'
+" let g:netrw_list_hide='.DS_Store,.git,.cache,dist,node_modules'
 " Disable banner for Netrw
-let g:netrw_banner = 0
+" let g:netrw_banner = 0
 " Default to tree view
-let g:netrw_liststyle = 3
+" let g:netrw_liststyle = 3
 " Resolve issue with quitting
 " https://vi.stackexchange.com/a/13012
-autocmd FileType netrw setl bufhidden=delete
-
+" autocmd FileType netrw setl bufhidden=delete
 
 " Nicer Split Bar
 set fillchars-=vert:\| | set fillchars+=vert:\ 
@@ -68,8 +67,9 @@ set scrolloff=3
 
 " Better Window Management
 " From https://youtu.be/sSOfr2MtRU8
-nmap ss :split<Return><C-w>w
-nmap sv :vsplit<Return><C-w>w
+set splitright
+nmap ss :vnew<Return> :NERDTreeToggle<Return>
+" :NERDTreeVCS<CR>
 map sh <C-w>h
 map sk <C-w>k
 map sj <C-w>j
@@ -96,18 +96,26 @@ call plug#begin()
   Plug 'universal-ctags/ctags'
   " Tag Bar
   Plug 'majutsushi/tagbar'
-  "
+  " NERD Tree
+  Plug 'scrooloose/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  " Dev Iconz
+  Plug 'ryanoasis/vim-devicons'
+
   " You Complete Me
   " `brew install cmake'
   " `python3 /Users/oob/.config/nvim/plugged/YouCompleteMe/install.py --rust-completer`
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
   " JavaScript
-  Plug 'pangloss/vim-javascript'
-  " Plug 'yuezk/vim-js'
+  " Plug 'pangloss/vim-javascript'
+  Plug 'yuezk/vim-js'
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'posva/vim-vue'
   Plug 'digitaltoad/vim-pug'
+  Plug 'prettier/prettier'
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+
 
   " Markdown
   Plug 'godlygeek/tabular'
@@ -116,6 +124,9 @@ call plug#begin()
   " Rust
   Plug 'rust-lang/rust.vim'
 
+  " nginx
+  Plug 'chr4/nginx.vim'
+
   " Lightline
    Plug 'itchyny/lightline.vim'
 
@@ -123,6 +134,9 @@ call plug#begin()
   Plug 'haishanh/night-owl.vim'
   " Dracula color scheme
   Plug 'dracula/vim', { 'as': 'dracula' }
+
+  " Highlight the cursor
+  Plug 'miyakogi/conoline.vim'
 
 call plug#end()
 
@@ -147,6 +161,8 @@ call plug#end()
 
   "Don't use Syntastic for HTML
   let g:syntastic_html_checkers = []
+  " But use ESLint for JavaScript
+  let g:syntastic_javascript_checkers = ['eslint']
 
   " Less uggo highlight warning
   hi QuickFixLine ctermbg=234
@@ -183,9 +199,13 @@ call plug#end()
 
 " JavaScript
   "let g:javascript_conceal_function = "ƒ"
-  let g:javascript_conceal_null = "Ø"
-  let g:javascript_conceal_undefined = "¿"
+  "let g:javascript_conceal_null = "Ø"
+  "let g:javascript_conceal_undefined = "¿"
   "let g:javascript_conceal_return = "⨞"
+  " Only if using 'vim-javascript' plugin
+  let g:vim_jsx_pretty_colorful_config = 1
+  " No semicolons on Prettier!
+  let g:prettier#config#semi = 'false'
 
 " Markdown
   " Disable folding
@@ -204,9 +224,10 @@ call plug#end()
 
 " Night Owl
   if (has("termguicolors"))
-   " set termguicolors
+   set termguicolors
   endif
   " colorscheme night-owl
+  colorscheme dracula
   " Set color of concealed characters
   highlight Conceal guifg=white guibg=black
   " Moar fixes
@@ -242,6 +263,15 @@ call plug#end()
     \ 't': 'TERMINAL',
     \ }
 
+" Conoline
+  let g:conoline_auto_enable = 1
+
+" NERDTree Config
+let NERDTreeHijackNetrw = 1
+let NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrowExpandable = "\u00a0"
+let NERDTreeDirArrowCollapsible = "\u00a0"
 
 " Turn off automatic comments
 autocmd FileType * setlocal formatoptions-=cro
