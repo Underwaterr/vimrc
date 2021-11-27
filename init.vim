@@ -17,7 +17,7 @@ set breakindent
 set autoindent
 set expandtab
 set shiftwidth=2
-set smartindent
+" set smartindent
 set list
 set listchars=tab:␉·,trail:·
 
@@ -83,12 +83,6 @@ nmap <Tab> :tabnext<CR>
 let g:plug_window = 'enew' " https://github.com/junegunn/vim-plug/issues/651
 
 call plug#begin()
-  " SmOooOOth Scrollin'
-  " Plug 'yuttie/comfortable-motion.vim'
-  " Git wrapper
-  Plug 'tpope/vim-fugitive'
-  " tmux integration
-  Plug 'christoomey/vim-tmux-navigator'
 
   " Syntastic
   Plug 'scrooloose/syntastic'
@@ -107,14 +101,21 @@ call plug#begin()
   " `python3 /Users/oob/.config/nvim/plugged/YouCompleteMe/install.py --rust-completer`
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
+  " HTML5
+  Plug 'othree/html5.vim'
+
   " JavaScript
-  " Plug 'pangloss/vim-javascript'
-  Plug 'yuezk/vim-js'
+  Plug 'pangloss/vim-javascript'  " This kind indents JS inside HTML correctly
+  "Plug 'yuezk/vim-js'            " This one does not!
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'posva/vim-vue'
   Plug 'digitaltoad/vim-pug'
-  Plug 'prettier/prettier'
-  Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+  " Plug 'prettier/prettier'
+  Plug 'prettier/vim-prettier'
+
+  " Python
+  Plug 'vim-python/python-syntax'
+  Plug 'nvie/vim-flake8'
 
 
   " Markdown
@@ -122,7 +123,7 @@ call plug#begin()
   Plug 'plasticboy/vim-markdown'
 
   " Rust
-  Plug 'rust-lang/rust.vim'
+  " Plug 'rust-lang/rust.vim'
 
   " nginx
   Plug 'chr4/nginx.vim'
@@ -137,6 +138,16 @@ call plug#begin()
 
   " Highlight the cursor
   Plug 'miyakogi/conoline.vim'
+
+  " Vimwiki
+  Plug 'vimwiki/vimwiki'
+
+  " Liquid Templates for Shopify
+  " (this plugin is oooooold)
+  Plug 'tpope/vim-liquid'
+
+  " Black code formatter/linter for Python
+  Plug 'ambv/black'
 
 call plug#end()
 
@@ -161,8 +172,11 @@ call plug#end()
 
   "Don't use Syntastic for HTML
   let g:syntastic_html_checkers = []
+  " Don't use Syntastic for JS (too slow)
   " But use ESLint for JavaScript
-  let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_javascript_checkers = []
+  " Specify Flake8 for Python3
+  let g:syntastic_python_checkers = ['flake8']
 
   " Less uggo highlight warning
   hi QuickFixLine ctermbg=234
@@ -194,7 +208,7 @@ call plug#end()
   " Lets go crazy
   let g:ycm_min_num_of_chars_for_completion = 1
   " Don't do it for JavaScript!
-  let g:ycm_filetype_blacklist = { 'vim': 1, 'javascript': 1, 'markdown': 1, 'html': 1}
+  let g:ycm_filetype_blacklist = { 'vim': 1, 'javascript': 1, 'markdown': 1, 'html': 1, 'text': 1}
   
 
 " JavaScript
@@ -275,3 +289,6 @@ let NERDTreeDirArrowCollapsible = "\u00a0"
 
 " Turn off automatic comments
 autocmd FileType * setlocal formatoptions-=cro
+
+" Preview in NERDTree
+let NERDTreeMapPreview = 'p'
