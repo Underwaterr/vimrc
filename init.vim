@@ -29,8 +29,8 @@ highlight LineNr ctermfg=238
 " Turn on & off line numbers with Ctrl+n
 nnoremap <C-n> :set number! relativenumber!<CR>
 
-" Compiiile
-noremap <F2> :w <CR> :!node % <CR>
+" Hotkey to run file in Node
+" noremap <F2> :w <CR> :!node % <CR>
 
 " netrw
 " let g:netrw_list_hide='.DS_Store,.git,.cache,dist,node_modules'
@@ -84,22 +84,11 @@ let g:plug_window = 'enew' " https://github.com/junegunn/vim-plug/issues/651
 
 call plug#begin()
 
-  " Syntastic
-  Plug 'scrooloose/syntastic'
-  " Universal Ctags
-  Plug 'universal-ctags/ctags'
-  " Tag Bar
-  Plug 'majutsushi/tagbar'
   " NERD Tree
   Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
-  " Dev Iconz
+  " Dev Iconz for NERD Tree
   Plug 'ryanoasis/vim-devicons'
-
-  " You Complete Me
-  " `brew install cmake'
-  " `python3 /Users/oob/.config/nvim/plugged/YouCompleteMe/install.py --rust-completer`
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
   " HTML5
   Plug 'othree/html5.vim'
@@ -117,13 +106,9 @@ call plug#begin()
   Plug 'vim-python/python-syntax'
   Plug 'nvie/vim-flake8'
 
-
   " Markdown
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown'
-
-  " Rust
-  " Plug 'rust-lang/rust.vim'
 
   " nginx
   Plug 'chr4/nginx.vim'
@@ -133,6 +118,7 @@ call plug#begin()
 
   " Night Owl color scheme
   Plug 'haishanh/night-owl.vim'
+
   " Dracula color scheme
   Plug 'dracula/vim', { 'as': 'dracula' }
 
@@ -142,80 +128,19 @@ call plug#begin()
   " Vimwiki
   Plug 'vimwiki/vimwiki'
 
-  " Liquid Templates for Shopify
-  " (this plugin is oooooold)
-  Plug 'tpope/vim-liquid'
-
   " Black code formatter/linter for Python
   Plug 'ambv/black'
 
 call plug#end()
 
-" Scrolling
-  " noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-  " noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
-
-" Syntastic (recommended settings)
-  " set statusline+=%#warningmsg#
-  " set statusline+=%{SyntasticStatuslineFlag()}
-  " set statusline+=%*
-
-  " let g:syntastic_always_populate_loc_list = 1
-  " let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-
-  let g:syntastic_error_symbol = '|>'
-  let g:syntastic_style_error_symbol = '|>'
-  let g:syntastic_warning_symbol = '|>'
-  let g:syntastic_style_warning_symbol = '||'
-
-  "Don't use Syntastic for HTML
-  let g:syntastic_html_checkers = []
-  " Don't use Syntastic for JS (too slow)
-  " But use ESLint for JavaScript
-  let g:syntastic_javascript_checkers = []
-  " Specify Flake8 for Python3
-  let g:syntastic_python_checkers = ['flake8']
-
-  " Less uggo highlight warning
+  " Less uggo highlight warning 
   hi QuickFixLine ctermbg=234
 
-  " Restrict size of (window? buffer? pane?)
-  " From https://stackoverflow.com/a/44031341
-  " see :h syntastic-loclist-callback
-  function! SyntasticCheckHook(errors)
-      if !empty(a:errors)
-          let g:syntastic_loc_list_height = min([len(a:errors)*2, 10])
-      endif
-  endfunction
-
-" Tagbar
-  nmap <F8> :TagbarToggle<CR>
-
-" YouCompleteMe
-  " Close preview window
-  let g:ycm_autoclose_preview_window_after_completion = 1
-  " Show lots of candidates!!
-  let g:ycm_max_num_candidates = 0
-  " Set preview window format to Markdown!!
-  augroup PreviewAutocmds
-    autocmd!
-    autocmd WinEnter * if &previewwindow | set filetype=markdown | endif
-  augroup END
-  " No thx error checking
-  let g:ycm_show_diagnostics_ui = 0
-  " Lets go crazy
-  let g:ycm_min_num_of_chars_for_completion = 1
-  " Don't do it for JavaScript!
-  let g:ycm_filetype_blacklist = { 'vim': 1, 'javascript': 1, 'markdown': 1, 'html': 1, 'text': 1}
-  
-
 " JavaScript
-  "let g:javascript_conceal_function = "ƒ"
-  "let g:javascript_conceal_null = "Ø"
-  "let g:javascript_conceal_undefined = "¿"
-  "let g:javascript_conceal_return = "⨞"
+  let g:javascript_conceal_function = "ƒ"
+  let g:javascript_conceal_null = "Ø"
+  let g:javascript_conceal_undefined = "¿"
+  let g:javascript_conceal_return = "↩"
   " Only if using 'vim-javascript' plugin
   let g:vim_jsx_pretty_colorful_config = 1
   " No semicolons on Prettier!
@@ -231,10 +156,6 @@ call plug#end()
   " Enable ~~strikethrough~~
   let g:vim_markdown_strikethrough = 1
 
-
-" Rust
-  " Format on save
-  let g:rustfmt_autosave = 1
 
 " Night Owl
   if (has("termguicolors"))
