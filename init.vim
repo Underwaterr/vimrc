@@ -1,6 +1,3 @@
-" Commands to remember!
-" Do `diw` to delete a whole word from the end of the word
-
 " Syntax Highlighting
 syntax enable
 
@@ -17,7 +14,6 @@ set breakindent
 set autoindent
 set expandtab
 set shiftwidth=2
-" set smartindent
 set list
 set listchars=tab:␉·,trail:·
 
@@ -29,19 +25,6 @@ highlight LineNr ctermfg=238
 " Turn on & off line numbers with Ctrl+n
 nnoremap <C-n> :set number! relativenumber!<CR>
 
-" Hotkey to run file in Node
-" noremap <F2> :w <CR> :!node % <CR>
-
-" netrw
-" let g:netrw_list_hide='.DS_Store,.git,.cache,dist,node_modules'
-" Disable banner for Netrw
-" let g:netrw_banner = 0
-" Default to tree view
-" let g:netrw_liststyle = 3
-" Resolve issue with quitting
-" https://vi.stackexchange.com/a/13012
-" autocmd FileType netrw setl bufhidden=delete
-
 " Nicer Split Bar
 set fillchars-=vert:\| | set fillchars+=vert:\ 
 autocmd colorscheme * highlight VertSplit cterm=NONE ctermfg=Green ctermbg=NONE
@@ -49,27 +32,20 @@ autocmd colorscheme * highlight VertSplit cterm=NONE ctermfg=Green ctermbg=NONE
 " Dim 'end of buffer' tildes
 highlight EndOfBuffer ctermfg=black ctermbg=black
 
-" Cycle thru buffers w/ tab key
-" nnoremap <Tab> :bnext!<CR>
-" Overwritten for 'Better Window Management' section!
-
 " Set the mouse to work better
 set mouse=a
 
-" Scrolling better with Shift-Arrow
+" Use shift with arrow keys to scroll
 map <S-Down> <C-E>
 map <S-Up> <C-Y>
+
 " How many lines you see above and below cursor
 set scrolloff=3
-" Alternatively, keep cursor centered
-" nnoremap j jzz
-" nnoremap k kzz
 
 " Better Window Management
 " From https://youtu.be/sSOfr2MtRU8
 set splitright
 nmap ss :vnew<Return> :NERDTreeToggle<Return>
-" :NERDTreeVCS<CR>
 map sh <C-w>h
 map sk <C-w>k
 map sj <C-w>j
@@ -116,12 +92,6 @@ call plug#begin()
   " Lightline
    Plug 'itchyny/lightline.vim'
 
-  " Night Owl color scheme
-  Plug 'haishanh/night-owl.vim'
-
-  " Dracula color scheme
-  Plug 'dracula/vim', { 'as': 'dracula' }
-
   " Highlight the cursor
   Plug 'miyakogi/conoline.vim'
 
@@ -150,30 +120,16 @@ call plug#end()
   " Disable folding
   let g:vim_markdown_folding_disabled = 1
   set conceallevel=2
-  " Fix indentation?
+  " Fix indentation problem
   let g:vim_markdown_new_list_item_indent = 0
   let g:vim_markdown_auto_insert_bullets = 0
   " Enable ~~strikethrough~~
   let g:vim_markdown_strikethrough = 1
 
-
-" Night Owl
-  if (has("termguicolors"))
-   set termguicolors
-  endif
-  " colorscheme night-owl
-  colorscheme dracula
-  " Set color of concealed characters
-  highlight Conceal guifg=white guibg=black
-  " Moar fixes
-  hi Search guibg=Yellow
-  hi Todo guibg=NONE guifg=Grey
-
 " Lightline
 " For Vim's statusline stuff: https://kadekillary.work/post/statusline-vim/
   " Disable Vim's default status bar set noshowmode
-  " Use Night Owl color scheme :)
-  let g:lightline = { 'colorscheme': 'nightowl' }
+  let g:lightline = { 'colorscheme': 'powerline' }
   let g:lightline.component = {
     \ 'hex': '0x%-02B',
     \ 'hexline': '0x%04-2O' }
